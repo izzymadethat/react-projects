@@ -13,10 +13,15 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [colorType, setColorType] = useState("hex");
   const [color, setColor] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
-  function handleGenerateColor() {
+  function randomColorMultiplier(length) {
+    return Math.floor(Math.random() * length);
+  }
+
+  function handleGenerateHexColor() {
     // generate random chars
     // join together
     // set color state to generated character
@@ -26,11 +31,19 @@ function App() {
 
     for (let i = 0; i < max; i++) {
       newColor += hexidecimalChars.charAt(
-        Math.random() * hexidecimalChars.length
+        randomColorMultiplier(hexidecimalChars.length)
       );
     }
 
     setColor(newColor);
+  }
+
+  function handleGenerateRGBColor() {
+    const r = randomColorMultiplier(256);
+    const g = randomColorMultiplier(256);
+    const b = randomColorMultiplier(256);
+
+    setColor(`rgb(${r},${g},${b})`);
   }
 
   function handleCopyColor() {
@@ -45,7 +58,19 @@ function App() {
       {/* Color Picker Component */}
       <div>
         <div className="buttons">
-          <button onClick={handleGenerateColor}>Generate Color</button>
+          <button onClick={() => setColorType("hex")}>
+            Use Hexidecimal Value
+          </button>
+          <button onClick={() => setColorType("rgb")}>Use RGB Value</button>
+          <button
+            onClick={
+              colorType === "hex"
+                ? handleGenerateHexColor
+                : handleGenerateRGBColor
+            }
+          >
+            Generate Color
+          </button>
           {color && (
             <button onClick={handleCopyColor} disabled={isCopied}>
               {isCopied ? "Copied!" : `Copy this color: ${color}`}
@@ -56,7 +81,7 @@ function App() {
         <h1 className="title">RANDOM COLOR GENERATOR</h1>
 
         <div className="color-name">
-          <p>Color:</p>
+          <p>Color Type: {colorType.toUpperCase()}</p>
           <div>
             {color ? <h2>{color}</h2> : <h2>Select a color to generate</h2>}
           </div>
