@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper button {
+  padding: 10px 20px;
+  background: #111;
+  color: #c7c7c7;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+}
+
+.accordion {
+  width: 500px;
+}
+
+.item {
+  background: #111111;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.title {
+  color: #fa973b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.content {
+  color: #c7c7c7;
+  height: auto;
+  text-align: left;
+}
