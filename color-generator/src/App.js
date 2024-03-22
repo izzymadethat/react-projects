@@ -26,7 +26,7 @@ function App() {
     // join together
     // set color state to generated character
     let max = 6;
-    let hexidecimalChars = "ABCDEF0123456789";
+    let hexidecimalChars = "0123456789ABCDEF";
     let newColor = "#";
 
     for (let i = 0; i < max; i++) {
