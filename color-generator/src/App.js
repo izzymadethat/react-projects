@@ -11,6 +11,7 @@
 
 import { useState } from "react";
 import "./App.css";
+import { convertHexToRGB, convertRGBToHex } from "./functions/color-convertor";
 
 function App() {
   const [colorType, setColorType] = useState("hex");
@@ -53,15 +54,45 @@ function App() {
     setTimeout(() => setIsCopied(false), 3000);
   }
 
+  function handleSwitchToHex() {
+    if (!color || colorType === "hex") return;
+
+    const rgbParse = color.slice(4, color.length - 1);
+    const rgbVals = rgbParse.split(",");
+    let convertedVals = [];
+
+    for (let i = 0; i < rgbVals.length; i++) {
+      let value = Number(rgbVals[i]);
+      convertedVals.push(value);
+    }
+
+    const hexValue = convertRGBToHex(convertedVals);
+
+    setColor(hexValue);
+    setColorType("hex");
+  }
+
+  function handleSwitchToRGB() {
+    if (!color || colorType === "rgb") return;
+
+    const hexValue = color.slice(1);
+    const rgbVal = convertHexToRGB(hexValue);
+
+    const r = rgbVal[0];
+    const g = rgbVal[1];
+    const b = rgbVal[2];
+
+    setColor(`rgb(${r},${g},${b})`);
+    setColorType("rgb");
+  }
+
   return (
     <div className="App" style={{ background: color ?? "" }}>
       {/* Color Picker Component */}
       <div>
         <div className="buttons">
-          <button onClick={() => setColorType("hex")}>
-            Use Hexidecimal Value
-          </button>
-          <button onClick={() => setColorType("rgb")}>Use RGB Value</button>
+          <button onClick={handleSwitchToHex}>Use Hexidecimal Value</button>
+          <button onClick={handleSwitchToRGB}>Use RGB Value</button>
           <button
             onClick={
               colorType === "hex"

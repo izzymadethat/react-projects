@@ -9,9 +9,9 @@
     4. first char's value is multiplied by 16, the second char is original value 0-15
     5. r value is now sum of first char and second char
     6. repeat steps 3-5 to get g and b value
-    7. return array of rgb values [255, 10, 43] 
+    7. return array of rgb values [255, 10, 43]
 
-    Edges: 
+    Edges:
     - if the number is more than 6 chars (indicating alpha code) -- not needed, this is directly implemented in the react code
 
     - if the number is 0, as 0 is a falsy non-number value
@@ -58,6 +58,19 @@ export function convertHexToRGB(hex) {
 
 /*
     Convert RGB to HEX
+
+    function that accepts array of 3 numbers [255, 10, 43]
+
+    Steps
+    1. for each number in array, divide the entire number by 16 -- this will more than likely return a decimal
+    2. split into string so that I can split based on the decimal
+    3. find a way to convert split[1] back to .value -- parseFloat allows me to concatenate 0. with split[1]
+
+    4. multiply the split[1] (number after decimal) by 16 then floor it (round down so I don't have to subtract 1)
+    5. since hexidecimal has 16 chars we need char at whatever number was divided
+
+    6. get index of first value and second value
+    7. when all 3 numbers return 6 hexidecimal chars, the hexidecimal string is returned
 */
 export function convertRGBToHex(rgbVals) {
   let hexChars = "0123456789ABCDEF";
@@ -75,5 +88,3 @@ export function convertRGBToHex(rgbVals) {
 
   return hexValue;
 }
-
-console.log(convertRGBToHex([255, 10, 43]));
