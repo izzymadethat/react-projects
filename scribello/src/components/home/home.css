@@ -1,0 +1,15 @@
+@import url("../../index.css");
+
+@layer components {
+  .header-content {
+    min-height: 75vh;
+    background: linear-gradient(
+        rgba(141, 39, 174, 0.8),
+        rgba(141, 39, 174, 0.95)
+      ),
+      url("../../assets/images/header.jpg") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
