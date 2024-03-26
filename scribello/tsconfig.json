@@ -18,8 +18,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@": ["./"],
+      "@/": ["./*"],
+      "@/components": ["./src/components/*"],
+      "@/lib": ["./src/lib/*"]
+    }
   },
-  "include": ["src", "./src/**/*.{ts, tsx, js, jsx}"],
+  "include": ["src", "./src/**/*.{ts, tsx, js, jsx}", "firebase.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
