@@ -1,14 +1,58 @@
-import { FaBookmark } from "react-icons/fa";
+import { FaBookmark, FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useUserContextGlobal } from "../lib/UserContext";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../firebase";
+import { useEffect, useState } from "react";
 
 export default function Book(book) {
+  const { user } = useUserContextGlobal();
+
+  const [bookAdded, setBookAdded] = useState(false);
+
+  useEffect(() => {
+    const fetchBookInfo = async (userId, bookData) => {
+      const bookRef = doc(db, "users", userId, "books", bookData.id);
+      const bookSnap = await getDoc(bookRef);
+
+      if (bookSnap.exists()) {
+        setBookAdded(true);
+      }
+    };
+
+    fetchBookInfo(user?.uid, book);
+  }, []);
+
+  const addBookToUserCollection = async (userId, bookData) => {
+    const bookRef = doc(db, "users", userId, "books", bookData.id);
+
+    try {
+      await setDoc(bookRef, {
+        data: bookData,
+        dateAdded: serverTimestamp(),
+      });
+      setBookAdded(true);
+    } catch (error) {
+      console.error("Error adding book to collection");
+    }
+
+    return;
+  };
   return (
     <div className="flex flex-col justify-between items-center gap-4 mb-8 bg-purple-100 p-12 rounded-lg shadow-lg">
       <div>
         <img
           src={book.coverImg}
           alt="cover"
-          className="w-72 hover:opacity-50 cursor-pointer"
+          className="w-64 mx-auto hover:opacity-50 cursor-pointer"
         />
 
         <div className="flex flex-col justify-center items-center">
@@ -33,16 +77,28 @@ export default function Book(book) {
       </div>
 
       <div className="flex gap-2 w-full">
-        <Link
-          to="/"
-          className="py-2 px-4 border border-purple-800 rounded-md shadow-md w-fit flex items-center gap-1"
+        <div
+          className="py-2 px-4 border border-purple-800 rounded-md shadow-md w-fit flex items-center gap-1 hover:text-purple-800/80 cursor-pointer"
+          onClick={() => addBookToUserCollection(user?.uid, book)}
         >
-          <FaBookmark />
-          {""}
-          <button className="text-purple-800 font-bold font-text text-sm">
-            Add to Collection
-          </button>
-        </Link>
+          {bookAdded ? (
+            <>
+              <FaCheckCircle />
+              {""}
+              <p className="text-purple-800 font-bold font-text text-sm text-center">
+                Added to your collection
+              </p>
+            </>
+          ) : (
+            <>
+              <FaBookmark />
+              {""}
+              <p className="text-purple-800 font-bold font-text text-sm">
+                Add to Collection
+              </p>
+            </>
+          )}
+        </div>
         <Link
           to="/"
           className="px-4 py-2 bg-gradient-to-r from-purple-800 to-purple-950/80 rounded-md shadow-md"

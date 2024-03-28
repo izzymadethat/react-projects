@@ -12,6 +12,7 @@ import SignUpPage from "./pages/auth/SignUp.tsx";
 import ViewAccountPage from "./pages/auth/ViewAccount.tsx";
 import App from "./App.tsx";
 import { ToastContainer } from "react-toastify";
+import MyBooksPage from "./pages/client/MyBooks.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <AppProvider>
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Route path="books" element={<BookListing />} />
               <Route path="/book/:id" element={<BookDetails />} />
             </Route>
+            <Route path="/my-books" element={<MyBooksPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
             <Route path="/account" element={<ViewAccountPage />} />

@@ -18,15 +18,16 @@ import {
   useEffect,
   useState,
 } from "react";
-import { auth } from "../../firebase";
+import { auth, provider } from "../../firebase";
 import {
+  GoogleAuthProvider,
   User,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
-import { redirect } from "react-router-dom";
-import { toast } from "react-toastify";
+import { addUserToDatabase } from "./dbFunctions";
 
 const UserContext = createContext(null);
 
@@ -52,6 +53,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     getAuthState();
   }, [getAuthState]);
 
+  const googleSignIn = async () => {
+    const result = await signInWithPopup(auth, provider);
+
+    if (result) {
+      setUser(result.user);
+      await addUserToDatabase(result.user);
+    }
+  };
+
   // sign the user in function
   const signIn = async () => {
     if (!email || !password) return;
@@ -67,9 +77,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (userCredentials) {
         setUser(userCredentials.user);
-        const firstName = user?.displayName?.split(" ")[0];
-        toast(`Welcome Back!`);
-        return redirect("/");
       } else {
         setErrorMessage("Could not sign in user");
       }
@@ -96,8 +103,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (userCredentials) {
         setUser(userCredentials.user);
-        const firstName = user?.displayName?.split(" ")[0];
-        return true;
+        await addUserToDatabase(userCredentials.user);
       } else {
         setErrorMessage("Could not sign up user");
         return false;
@@ -105,7 +111,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.log(error);
       setErrorMessage(error.message as string);
-      return false;
     } finally {
       setLoading(false);
     }
@@ -126,6 +131,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     signIn,
     signUp,
     signOut,
+    googleSignIn,
   };
 
   return (
@@ -144,6 +150,7 @@ type UserContextProps = {
   signIn: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   signUp: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   signOut: () => void;
+  googleSignIn: () => void;
 };
 
 export const useUserContextGlobal = () => {

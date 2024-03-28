@@ -53,12 +53,15 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-6">
           <ul className="flex gap-6">
             {navLinks.map((link, index) => (
-              <Link
-                to={link.path}
-                className="font-bold text-neutral-800 hover:text-purple-600"
-              >
-                <li key={index}>{link.name}</li>
-              </Link>
+              <div key={index}>
+                <Link
+                  to={link.path}
+                  className="font-bold text-neutral-800 hover:text-purple-600"
+                  key={index}
+                >
+                  <li>{link.name}</li>
+                </Link>
+              </div>
             ))}
           </ul>
           <div className="flex gap-2">
@@ -87,21 +90,25 @@ export default function Navbar() {
             </Link>
             <hr className="w-[180px] mt-8 border-slate-700" />
 
-            <ul className="flex flex-col justify-center w-full mt-10 space-y-6">
-              {navLinks.map((link, index) => (
-                <Link to={link.path}>
-                  <li
-                    key={index}
-                    className="flex gap-3 items-center rounded-md w-5/6 mx-auto p-6"
-                  >
-                    {link.icon}{" "}
-                    <span className="font-semibold text-neutral-700 text-xl font-title">
-                      {link.name}
-                    </span>
-                  </li>
-                </Link>
-              ))}
-            </ul>
+            <div className="flex flex-col justify-between items-center h-full  w-full">
+              <ul className="flex flex-col justify-center mt-10 gap-6">
+                {navLinks.map((link, index) => (
+                  <div key={index}>
+                    <Link to={link.path}>
+                      <li className="flex gap-3 items-center rounded-md w-full mx-auto p-4">
+                        {link.icon}{" "}
+                        <span className="font-semibold text-neutral-700 text-xl font-title">
+                          {link.name}
+                        </span>
+                      </li>
+                    </Link>
+                  </div>
+                ))}
+              </ul>
+              <div className="flex gap-4">
+                {user ? <>{userButtons}</> : <>{nonUserButtons}</>}
+              </div>
+            </div>
           </aside>
         )}
       </div>

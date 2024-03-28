@@ -16,8 +16,6 @@ export default function BookListing() {
     };
   });
 
-  console.log(booksWithCovers);
-
   if (loading) return <Loader />;
 
   return (

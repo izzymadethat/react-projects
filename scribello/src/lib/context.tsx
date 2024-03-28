@@ -41,8 +41,6 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
       const response = await fetch(`${URL}${searchTerm}`);
       const data = await response.json();
       const { docs } = data;
-      console.log(docs);
-
       if (docs) {
         const booksFound = docs.slice(0, 20).map((book) => {
           const {
@@ -93,6 +91,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         resultTitle,
         setResultTitle,
         searchTerm,
+        setLoading,
       }}
     >
       {children}

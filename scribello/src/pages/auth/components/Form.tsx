@@ -23,6 +23,7 @@ export default function Form({ submitType }: { submitType: string }) {
     password,
     errorMessage,
     loading,
+    googleSignIn,
   } = useUserContextGlobal();
 
   const handleSubmit = (e) => {
@@ -41,7 +42,7 @@ export default function Form({ submitType }: { submitType: string }) {
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
         <div className={styles.formEl}>
           <label className={styles.label}>Email</label>
@@ -92,7 +93,7 @@ export default function Form({ submitType }: { submitType: string }) {
         ) : (
           <button
             type="submit"
-            className="bg-purple-600 text-neutral-100 p-4 lg:text-2xl font-title font-extrabold tracking-wide rounded-md"
+            className="bg-purple-600 text-neutral-100 p-4 lg:text-2xl font-title font-extrabold tracking-wide rounded-md hover:bg-purple-600/90"
           >
             {submitType}
             {submitType === "Sign Up" && " For Free"}
