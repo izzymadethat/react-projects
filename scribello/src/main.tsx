@@ -23,9 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <RootLayout>
           <Routes>
             <Route path="/" element={<Home />}>
-              <Route path="about" element={<About />} />
               <Route path="books" element={<BookListing />} />
               <Route path="/book/:id" element={<BookDetails />} />
+              <Route path="about" element={<About />} />
             </Route>
             <Route path="my-books" element={<MyBooksPage />} />
             <Route path="sign-in" element={<SignInPage />} />
