@@ -32,7 +32,7 @@ export default function MyBooksPage() {
 
         setUserBookCollection(bookCollection);
       } catch (error) {
-        console.error("Could not load books");
+        console.error("Could not load books", error);
       } finally {
         setLoading(false);
       }
