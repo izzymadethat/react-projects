@@ -40,7 +40,7 @@ export default function Navbar() {
     </>
   );
   return (
-    <nav className="sticky top-0 bg-white border-b-4 border-b-purple-900 backdrop-blur-xl px-4">
+    <nav className="sticky top-0 bg-white border-b-4 border-b-purple-900 backdrop-blur-xl px-4 z-[1000]">
       <div className="flex justify-between items-center">
         <Link to="/" className="flex items-center">
           <img src="/src/assets/images/bookbunny-logo.png" className="w-16" />

@@ -1,13 +1,12 @@
 import Header from "../components/home/header/Header";
-import { useUserContextGlobal } from "../lib/UserContext";
-import BookListing from "./BookListing";
+import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { user } = useUserContextGlobal();
   return (
-    <main className="">
+    <main>
       <Header />
-      <BookListing />
+      <Outlet />
     </main>
   );
 }

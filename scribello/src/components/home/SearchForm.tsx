@@ -26,11 +26,11 @@ export default function SearchForm() {
   };
   return (
     <div>
-      <form className="flex w-full max-w-3xl" onSubmit={handleSubmit}>
-        <div className="flex items-center relative z-10">
+      <form className="flex w-full max-w-[75vw]" onSubmit={handleSubmit}>
+        <div className="flex items-center relative z-1">
           <input
             type="text"
-            className="w-[40vw] text-xl py-4 px-6 rounded-full outline-none shadow-md text-purple-700 font-semibold relative z-10"
+            className="w-[75vw] lg:w-[40vw] text-xl py-4 px-6 rounded-full outline-none shadow-md text-purple-700 font-semibold relative z-10"
             placeholder="The Great Gatsby ..."
             ref={searchText}
           />
